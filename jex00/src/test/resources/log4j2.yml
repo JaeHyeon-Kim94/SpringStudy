@@ -1,0 +1,48 @@
+Configuration:
+  name: DefaultConfig
+  status: warn
+  Properties:
+    property:
+      name: filePath
+      value: target/test-yml.log
+  ThresholdFilter:
+    level: debug
+  appenders:
+    Console:
+      name: console
+      target: SYSTEM_OUT
+      PatternLayout:
+        Pattern: "%m%n"
+    File:
+      name: file
+      fileName: ${filePath}
+      PatternLayout:
+        pattern: "%d %p %C{1.} [%t} %m%n"
+      Filters:
+        ThresholdFilter:
+          level: error
+
+  Loggers:
+    logger:
+      - name: jdbc.audit
+        level: warn
+        additivity: false
+        ThreadContextMapFilter:
+          KeyValuePair:
+            key: test
+            value: 123
+          AppenderRef:
+            ref: console
+
+      - name: jdbc.resultset
+        level: warn
+        additivity: false
+        AppenderRef:
+          ref: console
+
+    Root:
+      level: info
+      AppenderRef:
+        ref: console
+
+

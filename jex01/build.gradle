@@ -1,0 +1,44 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.7'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'war'
+}
+
+group = 'org.zerock'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+
+	all{
+		exclude group : 'org.springframework.boot', module : 'spring-boot-starter-logging'
+		//exclude group : 'org.apache.logging.log4j', module : 'log4j-to-slf4j'
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+	implementation'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
+	implementation 'javax.servlet:jstl:1.2'
+	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+	implementation 'commons-fileupload:commons-fileupload:1.4'
+	compileOnly 'org.projectlombok:lombok'
+	compileOnly 'javax.servlet:javax.servlet-api'
+
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
